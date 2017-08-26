@@ -17,9 +17,17 @@
     <!-- GPS/INS -->
     <node pkg="ins_ekf" type="gps_ins_node" name="gps_ins_node" output="screen" >
         <rosparam file="$(find path_duplication_launch)/config/gps_ins_crossbow_parameters.yaml" command="load" />
+        <param name="gps_topic_name" value="/novatel_node/odom" type="string"/>
+        <param name="imu_topic_name" value="/xbow440_node/imu/data" type="string"/>
     </node>
 
     <!-- Heading error publisher -->
     <node pkg="prowler_steer_control" type="heading_error_publisher.py" name="heading_error_publisher" output="screen" required="true"/>
+
+    <!-- Prowler Steer Control -->
+    <node pkg="prowler_steer_control" type="prowler_steer_control_node.py" name="prowler_steer_control_node" output="screen" required="true">
+        <param name="control_reference_topic" value="/heading_error_publisher/headingControlReference" type="string"/>
+        <param name="velocity_topic" value="/novatel_node/odom" type="string"/>
+    </node>
 
 </launch>
