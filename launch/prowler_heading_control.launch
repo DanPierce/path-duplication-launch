@@ -1,0 +1,22 @@
+<launch>
+
+
+    <!-- global parameters -->
+    <param name="latitude_reference" value="32.5939"/>
+    <param name="longitude_reference" value="-85.4867"/>
+
+    <!-- IMU -->
+
+    <!-- Novatel -->
+    <include file="$(find path_duplication_launch)/launch/novatel.launch"/>
+
+    <!-- GPS/INS -->
+    <node pkg="ins_ekf" type="gps_ins_node" name="gps_ins_node" output="screen" >
+        <rosparam file="$(find path_duplication_launch)/config/gps_ins_crossbow_parameters.yaml" command="load" />
+    </node>
+
+    <!-- Heading error publisher -->
+    <node pkg="prowler_steer_control" type="heading_error_publisher.py" name="heading_error_publisher" output="screen" required="true"/>
+    </node>
+
+</launch>

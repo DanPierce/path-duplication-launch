@@ -1,0 +1,29 @@
+<launch>
+	
+	<!-- Start the novatel node -->
+	<node pkg="novatel" type="novatel_node" name="novatel_front" output="screen" 
+	    required="true">
+		<param name="port" value="/dev/ttyUSB0" />
+		<param name="baudrate" value="115200" />
+		<!-- <param name="configure_port" value="COM2,9600,RTCM,NONE" /> -->
+		<!-- <param name="configure_port" value="COM2,115200,RTCM,NONE" /> -->
+		<!-- <param name="configure_port" value="COM2,115200,RTCMV3,NONE" /> -->
+		<!-- <param name="configure_port" value="COM2,115200,CMR,NONE" /> -->
+
+	    <param name="log_ephemeris" value="true" />
+
+	    <!-- Note: 0.05 seems a bit too fast for ROS -->
+		<!-- <param name="log_commands" value="BESTUTMB ONTIME 0.05; BESTVELB ONTIME 0.05; RANGECMPB ONTIME 0.05; BESTXYZB ONTIME 0.05; SATXYZB ONTIME 0.05; RAWGPSSUBFRAMEB ONTIME 10.0; RAWEPHEMB ONTIME 10.0" /> -->
+		<!-- <param name="gps_default_logs_period" value="0.05" /> -->
+
+		<!-- <param name="log_commands" value="BESTUTMB ONTIME 0.1; BESTVELB ONTIME 0.1; RANGECMPB ONTIME 0.1; BESTXYZB ONTIME 0.1; SATXYZB ONTIME 0.1; RAWGPSSUBFRAMEB ONTIME 60.0; RAWEPHEMB ONTIME 60.0" /> -->
+		<!-- <param name="gps_default_logs_period" value="0.1" /> -->
+
+		<param name="log_commands" value="BESTUTMB ONTIME 0.2; BESTVELB ONTIME 0.2; RANGECMPB ONTIME 0.2; BESTXYZB ONTIME 0.2; RAWGPSSUBFRAMEB ONTIME 10.0; RAWEPHEMB ONTIME 10.0" />
+		<param name="gps_default_logs_period" value="0.2" />
+		
+
+		<!-- <param name="span_default_logs_period" value="0.0" /> -->
+	</node>
+
+</launch>
