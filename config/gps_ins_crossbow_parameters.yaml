@@ -1,5 +1,5 @@
 gps_topic_name: /novatel_node/odom
-imu_topic_name: /xsens/data
+imu_topic_name: /xbow440_node/imu/data
 
 initial_heading_deg: 999.0 # value > 360 means automatic initialization using course
 
