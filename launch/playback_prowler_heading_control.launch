@@ -1,0 +1,27 @@
+<launch>
+
+    <!-- global parameters -->
+    <param name="latitude_reference" value="32.5955"/> <!-- Skid pad lat/long -->
+    <param name="longitude_reference" value="-85.2954"/>
+
+        <!-- arguments -->
+    <arg name="bagpath" default="/media/psf/Home/Google\ Drive/GAVLAB/data/prowler/steer_control_data"/>
+    <arg name="bagfile" default="$(arg bagpath)/heading_control_run1.bag"/>
+
+    <!-- rosbag play -->
+    <param name="use_sim_time" value="true"/>
+    <node name="rosbag" pkg="rosbag" type="play" args="-q -s 20 --clock -r 1.0 $(arg bagfile)" output="screen" >
+        <remap from="/gps_ins_node/odom" to="/gps_ins_node_live/odom"/>
+        <remap from="/ackermann_cmd" to="/ackermann_cmd_live"/>
+    </node>
+
+    <!-- GPS/INS -->
+    <include file="$(find path_duplication_launch)/launch/gps_ins.launch"/>
+
+    <!-- Heading error publisher -->
+    <node pkg="prowler_steer_control" type="heading_error_publisher.py" name="heading_error_publisher" output="screen" required="true"/>
+
+    <!-- Prowler Steer Control -->
+    <include file="$(find path_duplication_launch)/launch/prowler_steer_control.launch"/>
+
+</launch>

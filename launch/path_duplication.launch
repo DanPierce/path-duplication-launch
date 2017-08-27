@@ -1,0 +1,10 @@
+<launch>
+
+  <!-- Path Duplication -->
+  <node pkg="path_duplication" type="path_duplication_node" name="path_duplication_node" output="screen" required="true">
+    <param name="drtk_topic" value="/drtk_node/drtkOutput" type="string"/>
+    <param name="tdcp_topic" value="/tdcp_node/tdcpOutput" type="string"/>
+    <param name="queue_size" value="0"/>
+  </node>
+
+</launch>

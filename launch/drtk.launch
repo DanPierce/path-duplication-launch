@@ -3,24 +3,15 @@
   <!-- Start the drtk node -->
   <node pkg="drtk" type="drtk_ros_node" name="drtk_node" output="screen" required="true">
 
-  <!-- Name ROS topics -->
-  <param name="raw_measurements_tagged_local_topic_name"  type="str" value="/novatel_rear/rawMeasurementsTagged" />
-  <param name="ecef_odometry_local_topic_name"  type="str" value="/novatel_rear/odom" />
-  <param name="gps_ephemeris_tagged_topic_name"  type="str" value="/novatel_rear/gpsEphemerisTagged" />
+    <!-- Name ROS topics -->
+    <param name="raw_measurements_tagged_local_topic_name"  type="str" value="/novatel_rear/rawMeasurementsTagged" />
+    <param name="ecef_odometry_local_topic_name"  type="str" value="/novatel_rear/odom" />
+    <param name="gps_ephemeris_tagged_topic_name"  type="str" value="/novatel_rear/gpsEphemerisTagged" />
 
-  <param name="raw_measurements_tagged_remote_topic_name"  type="str" value="/novatel_front/rawMeasurementsTagged" />
-  <param name="ecef_odometry_remote_topic_name"  type="str" value="/novatel_front/odom" />
+    <param name="raw_measurements_tagged_remote_topic_name"  type="str" value="/novatel_front/rawMeasurementsTagged" />
+    <param name="ecef_odometry_remote_topic_name"  type="str" value="/novatel_front/odom" />
 
-  <param name="drtk_output_topic_name"  type="str" value="drtkOutput" />
-
-  <!-- Default ROS topic names
-  <param name="raw_measurements_tagged_local_topic_name"  type="str" value="rawMeasurementsLocalTagged" />
-  <param name="ecef_odometry_local_topic_name"  type="str" value="odomLocal" />
-  <param name="gps_ephemeris_tagged_topic_name"  type="str" value="gpsEphemerisTagged" />
-  <param name="raw_measurements_tagged_remote_topic_name"  type="str" value="rawMeasurementsRemoteTagged" />
-  <param name="ecef_odometry_remote_topic_name"  type="str" value="odomRemote" />
-  <param name="drtk_output_topic_name"  type="str" value="drtkOutput" />
-  -->
+    <param name="drtk_output_topic_name"  type="str" value="drtkOutput" />
   
   </node>
 

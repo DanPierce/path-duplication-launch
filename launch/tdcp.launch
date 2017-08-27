@@ -1,0 +1,9 @@
+<launch>
+
+  <!-- TDCP -->
+  <node pkg="tdcp" type="tdcp_node" name="tdcp_node" output="screen" >
+      <param name="ephemeris_topic" value="/novatel_rear/gpsEphemerisTagged" type="string"/>
+      <param name="raw_measurements_topic" value="/novatel_rear/rawMeasurementsTagged" type="string"/>
+  </node>
+
+</launch>

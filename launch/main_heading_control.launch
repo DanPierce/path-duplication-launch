@@ -1,0 +1,25 @@
+<launch>
+
+    <!-- global parameters -->
+    <param name="latitude_reference" value="32.5955"/> <!-- Skid pad lat/long -->
+    <param name="longitude_reference" value="-85.2954"/>
+
+    <!-- IMU -->
+    <include file="$(find path_duplication_launch)/launch/crossbow.launch"/>
+
+    <!-- Novatel -->
+    <include file="$(find path_duplication_launch)/launch/novatel_rear.launch"/>
+
+    <!-- GPS/INS -->
+    <include file="$(find path_duplication_launch)/launch/gps_ins.launch"/>
+
+    <!-- Heading error publisher -->
+    <node pkg="prowler_steer_control" type="heading_error_publisher.py" name="heading_error_publisher" output="screen" required="true"/>
+
+    <!-- Prowler Steer Control -->
+    <node pkg="prowler_steer_control" type="prowler_steer_control_node.py" name="prowler_steer_control_node" output="screen" required="true">
+        <param name="control_reference_topic" value="/heading_error_publisher/headingControlReference" type="string"/>
+        <param name="velocity_topic" value="/novatel_rear/odom" type="string"/>
+    </node>
+
+</launch>

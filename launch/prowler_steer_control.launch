@@ -1,0 +1,12 @@
+<launch>
+
+  <!-- Prowler Steer Control -->
+  <node pkg="prowler_steer_control" type="prowler_steer_control_node.py" name="prowler_steer_control_node" output="screen" required="true">
+
+    <param name="control_reference_topic" value="/path_duplication_node/headingControlReference" type="string"/>
+    
+    <param name="velocity_topic" value="/novatel_rear/odom" type="string"/>
+  
+  </node>
+
+</launch>

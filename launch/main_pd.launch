@@ -1,0 +1,29 @@
+<launch>
+
+    <!-- global parameters -->
+    <param name="latitude_reference" value="32.5955"/> <!-- Skid pad lat/long -->
+    <param name="longitude_reference" value="-85.2954"/>
+
+    <!-- IMU -->
+    <include file="$(find path_duplication_launch)/launch/crossbow.launch"/>
+
+    <!-- Novatel -->
+    <include file="$(find path_duplication_launch)/launch/novatel_front.launch"/>
+    <include file="$(find path_duplication_launch)/launch/novatel_rear.launch"/>
+
+    <!-- DRTK -->
+    <include file="$(find path_duplication_launch)/launch/drtk.launch"/>
+
+    <!-- TDCP -->
+    <include file="$(find path_duplication_launch)/launch/tdcp.launch"/>
+
+    <!-- GPS/INS -->
+    <include file="$(find path_duplication_launch)/launch/gps_ins.launch"/>
+
+    <!-- Path Duplication -->
+    <include file="$(find path_duplication_launch)/launch/path_duplication.launch"/>
+
+    <!-- Prowler Steer Control -->
+    <include file="$(find path_duplication_launch)/launch/prowler_steer_control.launch"/>
+
+</launch>
