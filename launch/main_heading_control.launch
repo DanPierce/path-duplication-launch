@@ -28,4 +28,7 @@
         <param name="velocity_topic" value="/novatel_rear/odom" type="string"/>
     </node>
 
+    <!-- Rosbag record -->
+    <node pkg="rosbag" type="record" name="bagman" args="-a -b 0 -o $(find path_duplication_launch)/../data/heading_control.bag">
+
 </launch>
