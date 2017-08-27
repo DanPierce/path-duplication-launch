@@ -19,7 +19,13 @@
     <include file="$(find path_duplication_launch)/launch/gps_ins.launch"/>
 
     <!-- Heading error publisher -->
-    <node pkg="prowler_steer_control" type="heading_error_publisher.py" name="heading_error_publisher" output="screen" required="true"/>
+    <node pkg="prowler_steer_control" type="heading_error_publisher.py" name="heading_error_publisher" output="screen" required="true">
+        <!-- control_reference_type (0=step input, 1=sinusoidal) -->
+        <param name="control_reference_type" value="0"/> 
+        <param name="yaw_amplitude_deg" value="15.0"/>
+        <param name="time_interval" value="3.0"/>
+
+    </node>
 
     <!-- Prowler Steer Control -->
     <include file="$(find path_duplication_launch)/launch/prowler_steer_control.launch"/>
