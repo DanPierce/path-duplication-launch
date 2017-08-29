@@ -10,26 +10,25 @@ imu_time_step: 0.01
 queue_size: 1
 
 # Initial state estimate uncertainty (0 -> use covariance from first GPS measurement)
-initial_position_std_dev: 0.3
-initial_velocity_std_dev: 0.1
+# initial_position_std_dev: 1.0
+# initial_velocity_std_dev: 0.1
 
 initial_attitude_std_dev: 0.035
 
 # Measurement uncertainty (0 -> use covariance from odom message TO DO)
-position_std_dev: 0.3
-velocity_std_dev: 0.1
+
 
 gps_position_updates: true
 gps_velocity_updates: true
 
 
-# IMU noise (0 -> use covariance from imu message)
-random_walk_accelerometer: 0.03
-bias_instability_accelerometer: 0.0001
-bias_offset_accelerometer: 0.01
-random_walk_gyroscope: 0.000465 
-bias_instability_gyroscope: 0.000001
-bias_offset_gyroscope: 0.001
+# IMU noise (0 -> use covariance from imu message TO DO)
+random_walk_accelerometer: 0.034
+bias_instability_accelerometer: 0.0003
+bias_offset_accelerometer: 0.1
+random_walk_gyroscope: 0.001
+bias_instability_gyroscope: 0.00001
+bias_offset_gyroscope: 0.01
 
 input_rotation_matrix: [ 1, 0, 0,
                          0, 1, 0,

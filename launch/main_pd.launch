@@ -27,6 +27,6 @@
     <include file="$(find path_duplication_launch)/launch/prowler_steer_control.launch"/>
 
     <!-- Rosbag record -->
-    <node pkg="rosbag" type="record" name="bagman" args="-a -b 0 -o $(find path_duplication_launch)/../data/path_duplication.bag">
+    <node pkg="rosbag" type="record" name="bagman" args="-a -b 0 -o /home/gavlab/devel/path_duplication_ws/data/path_duplication"/>
 
 </launch>

@@ -2,7 +2,7 @@
 
     <!-- IMU -->
     <node pkg="xbow440" type="xbow440_node" name="xbow440_node" output="screen" >
-        <param name="port" value="/dev/ttyS2" />
+        <param name="port" value="/dev/ttyS0" />
         <param name="baudrate" value="57600" />
     </node>
 

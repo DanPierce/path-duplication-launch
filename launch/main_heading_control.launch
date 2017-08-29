@@ -29,6 +29,6 @@
     </node>
 
     <!-- Rosbag record -->
-    <node pkg="rosbag" type="record" name="bagman" args="-a -b 0 -o $(find path_duplication_launch)/../data/heading_control.bag">
+    <node pkg="rosbag" type="record" name="bagman" args="-a -b 0 -o /home/gavlab/devel/path_duplication_ws/data/heading_control"/>
 
 </launch>

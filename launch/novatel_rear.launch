@@ -3,13 +3,13 @@
 	<!-- Start the novatel node -->
 	<node pkg="novatel" type="novatel_node" name="novatel_rear" output="screen" 
 	    required="true">
-		<param name="port" value="/dev/ttyS0" />
+		<param name="port" value="/dev/ttyS1" />
 		<param name="baudrate" value="115200" />
 
 	    <param name="log_ephemeris" value="true" />
 
-		<param name="log_commands" value="BESTUTMB ONTIME 0.2; BESTVELB ONTIME 0.2; RANGECMPB ONTIME 0.2; BESTXYZB ONTIME 0.2; RAWGPSSUBFRAMEB ONTIME 10.0; RAWEPHEMB ONTIME 10.0" />
-		<param name="gps_default_logs_period" value="0.2" />
+		<param name="log_commands" value="BESTUTMB ONTIME 0.5; BESTVELB ONTIME 0.5; RANGECMPB ONTIME 0.5; BESTXYZB ONTIME 0.5; RAWGPSSUBFRAMEB ONTIME 10.0; RAWEPHEMB ONTIME 10.0" />
+		<param name="gps_default_logs_period" value="0.5" />
 		
 	</node>
 
