@@ -34,8 +34,9 @@ input_rotation_matrix: [ 1, 0, 0,
                          0, 1, 0,
                          0, 0, 1]
 
+# offset from IMU to antenna 
 longitudinal_antenna_offset: 0.0
 lateral_antenna_offset: 0.0
-vertical_antenna_offset: 0.0
+vertical_antenna_offset: -0.91
 
 
