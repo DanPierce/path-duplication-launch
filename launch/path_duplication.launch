@@ -2,16 +2,19 @@
 
   <!-- Path Duplication -->
   <node pkg="path_duplication" type="path_duplication_node" name="path_duplication_node" output="screen" required="true">
-    <param name="drtk_topic" value="/drtk_node/drtkOutput" type="string"/>
-    <param name="tdcp_topic" value="/tdcp_node/tdcpOutput" type="string"/>
-    <param name="queue_size" value="0"/>
 
-    <param name="gps_time_step" value="0.5"/>
-    <param name="nav_sol_time_step" value="0.01"/>
+      <param name="tdcp_topic" value="/tdcp_node/tdcpOutput" type="string"/>
+      <param name="drtk_topic" value="/drtk_node/drtkOutput" type="string"/>
+      <param name="navigation_solution_topic" value="/gps_ins_node/odom" type="string"/>
+      <param name="queue_size" value="0"/>
 
-    <param name="waypoint_increment_angle" value="1.57"/>
+      <param name="gps_time_step" value="0.5"/>
+      <param name="nav_sol_time_step" value="0.01"/>
+      <param name="waypoint_increment_angle" value="1.57"/>
+      <param name="waypoint_radius_scale" value="1.0"/>
+      <param name="waypoint_radius_minimum" value="1.0"/>
+      <param name="require_precise_drtk" value="true"/>
 
-    <param name="waypoint_increment_radius" value="3.0"/>
 
   </node>
 

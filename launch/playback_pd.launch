@@ -6,7 +6,7 @@
 
         <!-- arguments -->
     <arg name="bagpath" default="/media/psf/Home/Google\ Drive/GAVLAB/data/prowler/10_31_17"/>
-    <arg name="bagfile" default="$(arg bagpath)/path_duplication_data_2017-10-31-11-01-27"/>
+    <arg name="bagfile" default="$(arg bagpath)/path_duplication_data"/>
 
     <!-- rosbag play -->
     <param name="use_sim_time" value="true"/>
@@ -15,13 +15,22 @@
         <!-- <remap from="/ackermann_cmd" to="/ackermann_cmd_live"/> -->
     </node>
 
-    <!-- GPS/INS -->
-    <!-- <include file="$(find path_duplication_launch)/launch/gps_ins.launch"/> -->
-
     <!-- DRTK -->
     <include file="$(find path_duplication_launch)/launch/drtk.launch"/>
 
     <!-- TDCP -->
-    <!-- <include file="$(find path_duplication_launch)/launch/tdcp.launch"/> -->
+    <include file="$(find path_duplication_launch)/launch/tdcp.launch"/>
+
+    <!-- GPS/INS -->
+    <include file="$(find path_duplication_launch)/launch/gps_ins.launch"/>
+
+    <!-- Path Duplication -->
+    <include file="$(find path_duplication_launch)/launch/path_duplication.launch"/>
+
+    <!-- Prowler Steer Control -->
+    <include file="$(find path_duplication_launch)/launch/prowler_steer_control.launch"/>
+
+    <!-- Rosbag record -->
+    <node pkg="rosbag" type="record" name="bagman" args="-a -b 0 -O $(arg bagfile)_playback.bag"/>
 
 </launch>
