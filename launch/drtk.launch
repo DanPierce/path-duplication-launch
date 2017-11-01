@@ -3,16 +3,21 @@
   <!-- Start the drtk node -->
   <node pkg="drtk" type="drtk_ros_node" name="drtk_node" output="screen" required="true">
 
-    <!-- Name ROS topics -->
-    <param name="raw_measurements_tagged_local_topic_name"  type="str" value="/novatel_rear/rawMeasurementsTagged" />
-    <param name="ecef_odometry_local_topic_name"  type="str" value="/novatel_rear/odom" />
-    <param name="gps_ephemeris_tagged_topic_name"  type="str" value="/novatel_rear/gpsEphemerisTagged" />
+  <!-- Name ROS topics -->
+  <param name="raw_measurements_tagged_local_topic_name"  type="str" value="/novatel_rear/rawMeasurementsTagged" />
+  <param name="ecef_odometry_local_topic_name"  type="str" value="/novatel_rear/odom" />
+  <param name="gps_ephemeris_tagged_topic_name"  type="str" value="/novatel_rear/gpsEphemerisTagged" />
 
-    <param name="raw_measurements_tagged_remote_topic_name"  type="str" value="/novatel_front/rawMeasurementsTagged" />
-    <param name="ecef_odometry_remote_topic_name"  type="str" value="/novatel_front/odom" />
+  <param name="raw_measurements_tagged_remote_topic_name"  type="str" value="/novatel_front/rawMeasurementsTagged" />
 
-    <param name="drtk_output_topic_name"  type="str" value="drtkOutput" />
+  <param name="drtk_output_topic_name"  type="str" value="drtkOutput" />
+
+  <param name="elevation_mask_angle_deg" value="15.0" />
+
+  <param name="carrier_to_noise_threshold" value="35.0" />
   
+  <param name="max_raw_measurement_queue_size" value="25" />
+
   </node>
 
 </launch>
