@@ -1,7 +1,7 @@
 <launch>
 
   <!-- GPS/INS -->
-  <node pkg="ins_ekf" type="gps_ins_node" name="gps_ins_node" output="screen" >
+  <node pkg="ins_ekf" type="gps_ins_node" name="gps_ins_node" output="screen" required="true">
 
     <!-- Note: parameters declared in the launch file will overwrite those in the yaml file -->
     <rosparam file="$(find path_duplication_launch)/config/crossbow_gps_ins.yaml" command="load" />
