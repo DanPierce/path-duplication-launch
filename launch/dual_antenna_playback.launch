@@ -1,0 +1,60 @@
+<launch>
+
+  <!-- arguments -->
+  <arg name="bagpath" default="/media/psf/Home/Google\ Drive/GAVLAB/data/mkz/dual_antenna_1_15_18"/>
+  <arg name="filename" default="dual_antenna_2018-01-15-17-15-36.bag"/>
+
+  <!-- rosbag play -->
+  <param name="use_sim_time" value="true"/>
+  <node name="rosbag" pkg="rosbag" type="play" args="--clock $(arg bagpath)/$(arg filename)" output="screen" >
+      <remap from="/gps_ins_node/odom" to="/gps_ins_node_live/odom"/>
+      <remap from="/gps_ins_node/estimate" to="/gps_ins_node_live/estimate"/>
+
+      <!-- <remap from="/clock" to="/clock_live"/> -->
+  </node>
+
+  <!-- GPS/INS -->
+  <node pkg="ins_ekf" type="gps_ins_node" name="gps_ins_node" output="screen" >
+
+    <!-- Note: parameters declared in the launch file will overwrite those in the yaml file -->
+    <rosparam file="$(find ins_ekf)/config/kvh1725_gps_ins.yaml" command="load" />
+   
+    <!-- Lever arm to left antenna -->
+    <param name="longitudinal_antenna_offset" value="1.181"/>
+    <param name="lateral_antenna_offset" value="0.935"/>
+    <param name="vertical_antenna_offset" value="-1.618"/>
+    <param name="gps_topic_name" value="/novatel_rear/odom"/>
+
+    <param name="queue_size" value="0"/>
+  
+  </node>
+
+  <!-- Start the drtk node -->
+  <node pkg="drtk" type="drtk_ros_node" name="drtk_node" output="screen" required="true">
+
+      <!-- Name ROS topics -->
+      <param name="raw_measurements_tagged_local_topic_name"  type="str" value="/novatel_rear/rawMeasurementsTagged" />
+      <param name="ecef_odometry_local_topic_name"  type="str" value="/novatel_rear/odom" />
+      <param name="gps_ephemeris_tagged_topic_name"  type="str" value="/novatel_rear/gpsEphemerisTagged" />
+
+      <param name="raw_measurements_tagged_remote_topic_name"  type="str" value="/novatel_front/rawMeasurementsTagged" />
+
+      <param name="drtk_output_topic_name"  type="str" value="drtkOutput" />
+
+      <param name="elevation_mask_angle_deg" value="15.0" />
+
+      <param name="carrier_to_noise_threshold" value="35.0" />
+
+      <param name="max_raw_measurement_queue_size" value="25" />
+      
+  </node>
+
+    <node pkg="wgs_conversions" type="wgs_conversions_server" name="wgs_conversions_server" output="screen" required="true"/>
+
+    <node pkg="path_duplication_launch" type="dual_antenna_attitude.py" name="dual_antenna_attitude" output="screen" required="true"/>
+
+
+  <node pkg="rosbag" type="record" name="bagger" args="-a -b 0 -O z_$(arg filename)" output="screen"/>
+
+
+</launch>

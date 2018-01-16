@@ -1,36 +1,70 @@
 <launch>
 
+
+    <arg name="set1" default="false"/>
+    <arg name="set2" default="false"/>
+    <arg name="set3" default="true"/>
+    <arg name="set4" default="false"/>
+
+    <arg name="processNewPath" default="true"/>
+
+    
+
+    <!-- arguments -->
+    <arg name="bagpath" default="/media/psf/Home/Google\ Drive/GAVLAB/data/mkz/path_duplication_1_13_18"/>
+
+    <!-- First path following attempt around track -->
+    <arg if="$(arg set1)" name="bagfile" default="$(arg bagpath)/path_duplication_2018-01-13-18-20-04"/>
+    
+    <!-- Second path following attempt around track -->
+    <arg if="$(arg set2)" name="bagfile" default="$(arg bagpath)/path_duplication_2018-01-13-18-27-49"/>
+    
+    <!-- Third path following attempt around track. This is where lead vehicle came to a stop and waypoints started to collect. -->
+    <arg if="$(arg set3)" name="bagfile" default="$(arg bagpath)/path_duplication_2018-01-13-18-35-49"/>
+
+    <group if="$(arg set4)">
+        <arg name="bagpath" default="/media/psf/Home/Google\ Drive/GAVLAB/data/mkz/fake_drtk_pd_1_15_18"/>
+        <arg name="bagfile" default="$(arg bagpath)/fake_drtk_pd_2018-01-15-16-53-56"/>
+    </group>
+
+    <!-- rosbag play -->
+    <param name="use_sim_time" value="false"/>
+    <node name="rosbag" pkg="rosbag" type="play" args="-s 30 -r 1.0 $(arg bagfile).bag" output="screen" required="true" >
+        <remap if="$(arg processNewPath)" from="/path_duplication_node/virtualLeadRpv" to="/path_duplication_node/virtualLeadRpv_live"/>
+        <remap if="$(arg processNewPath)" from="/path_duplication_node/headingControlReference" to="/path_duplication_node/headingControlReference_live"/>
+        <remap if="$(arg processNewPath)" from="/path_duplication_node/path" to="/path_duplication_node/path_live"/>
+        <remap if="$(arg processNewPath)" from="/path_duplication_node/headingDesired" to="/path_duplication_node/headingDesired_live"/>
+        <remap from="/tf" to="/tf_live"/>
+    </node>
+
     <!-- global parameters -->
     <param name="latitude_reference" value="32.5955"/> <!-- Skid pad lat/long -->
     <param name="longitude_reference" value="-85.2954"/>
 
-        <!-- arguments -->
-    <arg name="bagpath" default="/media/psf/Home/Google\ Drive/GAVLAB/data/prowler/10_31_17"/>
-    <arg name="bagfile" default="$(arg bagpath)/path_duplication_data"/>
+    <!-- path duplication -->
+    <include if="$(arg processNewPath)" file="$(find path_duplication)/launch/path_duplication.launch"/>
 
-    <!-- rosbag play -->
-    <param name="use_sim_time" value="true"/>
-    <node name="rosbag" pkg="rosbag" type="play" args="-q -s 20 --clock -r 1.0 $(arg bagfile).bag" output="screen" >
-        <!-- <remap from="/gps_ins_node/odom" to="/gps_ins_node_live/odom"/> -->
-        <!-- <remap from="/ackermann_cmd" to="/ackermann_cmd_live"/> -->
+    <!-- command velocity repeater -->
+    <node name="cmd_vel_zoh" pkg="path_duplication" type="cmd_vel_zoh.py" output="screen" />
+
+    <!-- WGS Conversions Server -->
+    <node name="wgs_server" pkg="wgs_conversions" type="wgs_conversions_server" output="screen" />
+
+    <!-- TF broadcaster -->
+    <!-- <node name="nav_to_tf" pkg="path_duplication" type="nav_to_tf.py" output="screen" /> -->
+
+    <!-- Rviz -->
+    <!-- <node name="rviz" pkg="rviz" type="rviz" output="screen" args="-d $(find path_duplication)/rviz/path.rviz"/> -->
+
+    <!-- TDCP (lead) -->
+    <node pkg="tdcp" type="tdcp_node" name="tdcp_front" output="screen" >
+        <param name="elevation_mask_angle" value="15.0"/>
+        <param name="ephemeris_topic" value="/novatel_front/gpsEphemerisTagged" type="string"/>
+        <param name="raw_measurements_topic" value="/novatel_front/rawMeasurementsTagged" type="string"/>
+        <param name="queue_size" value="0" />
     </node>
-
-    <!-- DRTK -->
-    <include file="$(find path_duplication_launch)/launch/drtk.launch"/>
-
-    <!-- TDCP -->
-    <include file="$(find path_duplication_launch)/launch/tdcp.launch"/>
-
-    <!-- GPS/INS -->
-    <include file="$(find path_duplication_launch)/launch/gps_ins.launch"/>
-
-    <!-- Path Duplication -->
-    <include file="$(find path_duplication_launch)/launch/path_duplication.launch"/>
-
-    <!-- Prowler Steer Control -->
-    <include file="$(find path_duplication_launch)/launch/prowler_steer_control.launch"/>
-
-    <!-- Rosbag record -->
-    <node pkg="rosbag" type="record" name="bagman" args="-a -b 0 -O $(arg bagfile)_playback.bag"/>
-
+    
+    <!-- record -->
+    <node name="bagman" pkg="rosbag" type="record" args="-a -b 0 -O z_path_duplication_2018-01-13-18-35-49.bag" />
+    
 </launch>

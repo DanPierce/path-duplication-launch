@@ -8,6 +8,15 @@ catkin_package( )
 #############
 ## Install ##
 #############
+
+## For python scripts
+install(
+  DIRECTORY
+    scripts
+  USE_SOURCE_PERMISSIONS
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
 install(DIRECTORY
   launch
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
