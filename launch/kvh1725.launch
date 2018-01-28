@@ -1,0 +1,6 @@
+<launch>
+  <node name="kvh" pkg="kvh1750" type="kvh_1750_imu" output="screen" required="true">
+    <rosparam command="load" file="$(find kvh1750)/config/kvh1725.yaml"/>
+  </node>
+</launch>
+

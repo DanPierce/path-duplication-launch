@@ -1,0 +1,9 @@
+<launch>
+
+  <node name="rangenet_node" pkg="timedomain_uwb" type="rangenet_node"
+    output="screen" required="false">
+    <param name="radioId" value="100"/> <!-- master radio (connected to computer) -->
+    <param name="interface_type" value="USB" type="string"/>
+  </node>
+
+</launch>

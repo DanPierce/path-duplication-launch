@@ -1,0 +1,9 @@
+<launch>
+
+    <!-- mkz steer control -->
+    <node pkg="mkz_steer_control" type="mkz_steer_control_node.py" name="mkz_steer_control_node" output="screen" required="true">
+    	<param name="control_reference_topic" value="/path_duplication_node/headingControlReference" type="string"/>
+    	<param name="velocity_topic" value="/novatel_rear/odom" type="string"/>
+    </node>
+
+</launch>

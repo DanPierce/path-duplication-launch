@@ -1,0 +1,40 @@
+<launch>
+
+    <!-- global parameters -->
+    <param name="latitude_reference" value="32.5955"/> <!-- Skid pad lat/long -->
+    <param name="longitude_reference" value="-85.2954"/>
+
+    <!-- Novatel (follower) -->
+    <include file="$(find path_duplication_launch)/launch/novatel_rear.launch"/>
+
+    <!-- Novatel (leader) -->
+    <include file="$(find path_duplication_launch)/launch/novatel_front.launch"/>
+
+    <!-- KVH -->
+    <include file="$(find path_duplication_launch)/launch/kvh1725.launch"/>
+
+    <!-- DRTK -->
+    <include file="$(find path_duplication_launch)/launch/drtk.launch"/>
+
+    <!-- TDCP -->
+    <include file="$(find path_duplication_launch)/launch/tdcp.launch"/>
+
+    <!-- GPS/INS -->
+    <include file="$(find ins_ekf)/launch/kvh_gps_ins.launch" />
+
+    <!-- Path Duplication -->
+    <include file="$(find path_duplication_launch)/launch/path_duplication.launch"/>
+
+    <!-- MKZ Steer Control -->
+    <include file="$(find path_duplication_launch)/launch/mkz_steer_control.launch"/>
+
+    <!-- DBW -->
+    <include file="$(find path_duplication_launch)/launch/dbw_for_steer_only.launch"/>
+
+    <!-- TimeDomain UWB-->
+    <include file="$(find path_duplication_launch)/launch/rangenet.launch"/>
+
+    <!-- Rosbag record -->
+    <node pkg="rosbag" type="record" name="bagman" args="-a -b 0 -o /home/gavlab/devel/convoy_ws/data/path_duplication/path_duplication"/>
+
+</launch>
