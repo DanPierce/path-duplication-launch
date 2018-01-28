@@ -1,0 +1,41 @@
+<launch>
+
+    <!-- global parameters -->
+    <param name="latitude_reference" value="32.5955"/> <!-- Skid pad lat/long -->
+    <param name="longitude_reference" value="-85.2954"/>
+
+    <!-- arguments -->
+    <arg name="bagpath" default="/media/psf/Home/Google\ Drive/GAVLAB/data/mkz/path_duplication_1_13_18"/>
+    <arg name="bagfile" default="$(arg bagpath)/path_duplication_2018-01-13-18-10-52"/>
+
+    <!-- rosbag play -->
+    <param name="use_sim_time" value="false"/>
+    <node name="rosbag" pkg="rosbag" type="play" args="-q -s 80 -r 1.0 $(arg bagfile).bag" output="screen" required="true" >
+        <remap from="/path_duplication_node/virtualLeadRpv" to="/path_duplication_node/virtualLeadRpv_live"/>
+        <remap from="/path_duplication_node/headingControlReference" to="/path_duplication_node/headingControlReference_live"/>
+        <remap from="/path_duplication_node/path" to="/path_duplication_node/path_live"/>
+        <remap from="/path_duplication_node/headingDesired" to="/path_duplication_node/headingDesired_live"/>
+        <remap from="/tf" to="/tf_live"/>
+    </node>
+
+    <!-- path duplication -->
+    <include file="$(find path_duplication)/launch/path_duplication.launch"/>
+
+    <!-- WGS Conversions Server -->
+    <node name="wgs_server" pkg="wgs_conversions" type="wgs_conversions_server" output="screen" />
+
+    <!-- TF broadcaster -->
+    <node name="nav_to_tf" pkg="path_duplication" type="nav_to_tf.py" output="screen" />
+
+    <!-- path duplication -->
+    <include file="$(find path_duplication_launch)/launch/g35_mkz_pd_urdf.launch"/>
+
+
+
+    <!-- Rviz -->
+    <node name="rviz" pkg="rviz" type="rviz" output="screen" args="-d $(find path_duplication_launch)/rviz/path.rviz"/>
+    
+    <!-- record -->
+    <!-- <node name="bagman" pkg="rosbag" type="record" args="-a -b 0 -O $(arg bagpath)/path_duplication_run1_playback" /> -->
+    
+</launch>

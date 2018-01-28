@@ -1,0 +1,17 @@
+<launch>
+    
+  <arg name="vehicle" default="G35"/>
+
+  <node pkg="gavlab_vehicle_description" type="tf_broadcaster.py" name="g35_tf_broadcaster" output="screen" >
+
+    <param name="marker_frame_id" value="follower_base"/>
+
+    <param name="nav_topic" value="/gps_ins_node/odom"/>
+    <param name="update_rate" value="20.0"/>
+    
+    <rosparam file="$(find gavlab_vehicle_description)/garage/$(arg vehicle).yaml" command="load" />
+  </node>
+
+  <param name="robot_description" textfile="$(find gavlab_vehicle_description)/urdf/$(arg vehicle).urdf" />
+
+</launch>

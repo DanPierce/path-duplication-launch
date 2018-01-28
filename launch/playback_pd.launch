@@ -1,15 +1,12 @@
 <launch>
 
-
     <arg name="set1" default="false"/>
     <arg name="set2" default="false"/>
     <arg name="set3" default="true"/>
     <arg name="set4" default="false"/>
 
     <arg name="processNewPath" default="true"/>
-
     
-
     <!-- arguments -->
     <arg name="bagpath" default="/media/psf/Home/Google\ Drive/GAVLAB/data/mkz/path_duplication_1_13_18"/>
 
@@ -51,10 +48,10 @@
     <node name="wgs_server" pkg="wgs_conversions" type="wgs_conversions_server" output="screen" />
 
     <!-- TF broadcaster -->
-    <!-- <node name="nav_to_tf" pkg="path_duplication" type="nav_to_tf.py" output="screen" /> -->
+    <node name="nav_to_tf" pkg="path_duplication" type="nav_to_tf.py" output="screen" />
 
     <!-- Rviz -->
-    <!-- <node name="rviz" pkg="rviz" type="rviz" output="screen" args="-d $(find path_duplication)/rviz/path.rviz"/> -->
+    <node name="rviz" pkg="rviz" type="rviz" output="screen" args="-d $(find path_duplication)/rviz/path.rviz"/>
 
     <!-- TDCP (lead) -->
     <node pkg="tdcp" type="tdcp_node" name="tdcp_front" output="screen" >
@@ -65,6 +62,6 @@
     </node>
     
     <!-- record -->
-    <node name="bagman" pkg="rosbag" type="record" args="-a -b 0 -O z_path_duplication_2018-01-13-18-35-49.bag" />
+    <!-- <node name="bagman" pkg="rosbag" type="record" args="-a -b 0 -O z_path_duplication_2018-01-13-18-35-49.bag" /> -->
     
 </launch>

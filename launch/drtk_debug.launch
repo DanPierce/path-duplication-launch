@@ -1,0 +1,42 @@
+<launch>
+
+  <!-- arguments -->
+  <arg name="bagpath" default="/media/psf/Home/Google\ Drive/GAVLAB/data/mkz/dual_antenna_1_15_18"/>
+  <!-- <arg name="filename" default="z_drtk_dual_antenna_2018-01-15-17-15-36.bag"/> -->
+  <arg name="filename" default="dual_antenna_2018-01-15-17-21-16.bag"/>
+
+<!-- <arg name="bagpath" default="/media/psf/Home/Google\ Drive/GAVLAB/data/mkz/path_duplication_1_13_18"/> -->
+  <!-- <arg name="filename" default="path_duplication_2018-01-13-18-20-04.bag"/> -->
+  
+
+  <!-- rosbag play -->
+  <param name="use_sim_time" value="false"/>
+  <node name="rosbag" pkg="rosbag" type="play" args="-q --clock $(arg bagpath)/$(arg filename)" output="screen" required="true">
+      <!-- <remap from="/clock" to="/clock_live"/> -->
+      <remap from="/drtk_node/drtkOutput" to="/drtk_node_orig/drtkOutput"/>
+  </node>
+
+  <!-- Start the drtk node -->
+  <node pkg="drtk" type="drtk_ros_node" name="drtk_node" output="screen" required="true">
+
+      <!-- Name ROS topics -->
+      <param name="raw_measurements_tagged_local_topic_name"  type="str" value="/novatel_rear/rawMeasurementsTagged" />
+      <param name="ecef_odometry_local_topic_name"  type="str" value="/novatel_rear/odom" />
+      <param name="gps_ephemeris_tagged_topic_name"  type="str" value="/novatel_rear/gpsEphemerisTagged" />
+
+      <param name="raw_measurements_tagged_remote_topic_name"  type="str" value="/novatel_front/rawMeasurementsTagged" />
+
+      <param name="drtk_output_topic_name"  type="str" value="drtkOutput" />
+
+      <param name="elevation_mask_angle_deg" value="15.0" />
+
+      <param name="carrier_to_noise_threshold" value="35.0" />
+
+      <param name="max_raw_measurement_queue_size" value="25" />
+      
+  </node>
+
+  <node pkg="rosbag" type="record" name="bagger" args="-a -b 0 -O z_$(arg filename)" output="screen"/>
+
+
+</launch>
