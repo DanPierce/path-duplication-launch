@@ -1,0 +1,94 @@
+<launch>
+
+  <arg name="doPath" default="true"/>
+  <arg name="doBag" default="true"/>
+  <arg name="setId" default="1"/>
+  <arg name="drtkFront" default="true"/>
+  <arg name="startTime" default="0"/>
+
+  <!-- arguments -->
+  <arg name="bagpath" default="/media/psf/Home/Google\ Drive/GAVLAB/data/mkz/path_duplication_1_13_18"/>
+
+  <arg name="filename" default="path_duplication_$(arg setId)"/>
+
+  <!-- <arg name="start_time" default="5"/> -->
+
+  <!-- rosbag play -->
+  <param name="use_sim_time" value="true"/>
+  <node name="rosbag" pkg="rosbag" type="play" args="--clock -s $(arg startTime) $(arg bagpath)/$(arg filename).bag" output="screen" required="true">
+      <!-- <remap from="/clock" to="/clock_live"/> -->
+      <!-- <remap from="/drtk_node/drtkOutput" to="/drtk_node_orig/drtkOutput"/> -->
+    <remap from="/path_duplication_node/virtualLeadRpv" to="/path_duplication_node_live/virtualLeadRpv"/>
+    <remap from="/path_duplication_node/headingControlReference" to="/path_duplication_node_live/headingControlReference"/>
+    <remap from="/path_duplication_node/path" to="/path_duplication_node_live/path"/>
+    <remap from="/path_duplication_node/headingDesired" to="/path_duplication_node_live/headingDesired"/>
+    <remap from="/tf" to="/tf_live"/>
+  </node>
+
+  <!-- re-process path following -->
+  <node if="$(arg doPath)" pkg="path_duplication" type="path_duplication_node" name="path_duplication_node" output="screen" required="true">
+
+      <param name="tdcp_topic" value="/tdcp_node/tdcpOutput" type="string"/>
+      <param name="drtk_topic" value="/drtk_node/drtkOutput" type="string"/>
+      <param name="navigation_solution_topic" value="/gps_ins_node/odom" type="string"/>
+      <param name="queue_size" value="0"/>
+
+      <param name="gps_time_step" value="0.5"/>
+      <param name="nav_sol_time_step" value="0.01"/>
+      <param name="waypoint_increment_angle" value="1.57"/>
+      <param name="waypoint_radius_scale" value="1.0"/>
+      <param name="waypoint_radius_minimum" value="1.0"/>
+      <param name="require_precise_drtk" value="true"/>
+
+  </node>
+
+
+  <!-- Start the drtk node (to follower) -->
+  <node pkg="drtk" type="drtk_node" name="drtk_rear" output="screen" required="true">
+
+      <!-- Name ROS topics -->
+      <param name="raw_measurements_tagged_local_topic_name"  type="str" value="/novatel_rear/rawMeasurementsTagged" />
+      <param name="ecef_odometry_local_topic_name"  type="str" value="/novatel_rear/odom" />
+      <param name="gps_ephemeris_tagged_topic_name"  type="str" value="/novatel_rear/gpsEphemerisTagged" />
+
+      <param name="raw_measurements_tagged_remote_topic_name"  type="str" value="/novatel_base/rawMeasurementsTagged" />
+
+      <param name="ambiguity_verification_count_threshold" value="4" />
+
+  </node>
+
+  <!-- publish global position as ECEF odom -->
+  <node pkg="path_duplication_launch" type="base_drtk_to_odom.py" name="gps_truth_rear" output="screen" required="true">
+    <param name="drtk_topic" value="/drtk_rear/drtkOutput" />
+  </node>
+
+  <!-- do a GPS/INS for truth -->
+  <node pkg="ins_ekf" type="gps_ins_node" name="gps_ins_truth" output="screen" required="true">
+    <!-- Note: parameters declared in the launch file will overwrite those in the yaml file -->
+    <rosparam file="$(find path_duplication_launch)/config/kvh1725_drtk_centerAntenna.yaml" command="load" />
+    <param name="queue_size" value="1000"/>
+  </node>
+
+  <!-- Start the drtk node (to leader) -->
+  <node if="$(arg drtkFront)" pkg="drtk" type="drtk_node" name="drtk_front" output="screen" required="true">
+
+      <!-- Name ROS topics -->
+      <param name="raw_measurements_tagged_local_topic_name"  type="str" value="/novatel_front/rawMeasurementsTagged" />
+      <param name="ecef_odometry_local_topic_name"  type="str" value="/novatel_front/odom" />
+      <param name="gps_ephemeris_tagged_topic_name"  type="str" value="/novatel_front/gpsEphemerisTagged" />
+
+      <param name="raw_measurements_tagged_remote_topic_name"  type="str" value="/novatel_base/rawMeasurementsTagged" />
+
+      <param name="ambiguity_verification_count_threshold" value="4" />
+      
+  </node>
+
+  <!-- publish global position as ECEF odom -->
+  <node pkg="path_duplication_launch" type="base_drtk_to_odom.py" name="gps_truth_front" output="screen" required="true">
+    <param name="drtk_topic" value="/drtk_front/drtkOutput" />
+  </node>
+
+  <node if="$(arg doBag)" pkg="rosbag" type="record" name="bagger" args="-a -b 0 -O truth_$(arg filename)" output="screen" required="true"/>
+
+
+</launch>

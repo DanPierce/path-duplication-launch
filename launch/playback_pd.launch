@@ -1,36 +1,19 @@
 <launch>
 
-    <arg name="set1" default="false"/>
-    <arg name="set2" default="false"/>
-    <arg name="set3" default="true"/>
-    <arg name="set4" default="false"/>
+    <arg name="setId" default="1"/>
 
     <arg name="processNewPath" default="true"/>
     
     <!-- arguments -->
     <arg name="bagpath" default="/media/psf/Home/Google\ Drive/GAVLAB/data/mkz/path_duplication_1_13_18"/>
 
-    <!-- First path following attempt around track -->
-    <arg if="$(arg set1)" name="bagfile" default="$(arg bagpath)/path_duplication_2018-01-13-18-20-04"/>
-    
-    <!-- Second path following attempt around track -->
-    <arg if="$(arg set2)" name="bagfile" default="$(arg bagpath)/path_duplication_2018-01-13-18-27-49"/>
-    
-    <!-- Third path following attempt around track. This is where lead vehicle came to a stop and waypoints started to collect. -->
-    <arg if="$(arg set3)" name="bagfile" default="$(arg bagpath)/path_duplication_2018-01-13-18-35-49"/>
-
-    <group if="$(arg set4)">
-        <arg name="bagpath" default="/media/psf/Home/Google\ Drive/GAVLAB/data/mkz/fake_drtk_pd_1_15_18"/>
-        <arg name="bagfile" default="$(arg bagpath)/fake_drtk_pd_2018-01-15-16-53-56"/>
-    </group>
-
     <!-- rosbag play -->
-    <param name="use_sim_time" value="false"/>
-    <node name="rosbag" pkg="rosbag" type="play" args="-s 30 -r 1.0 $(arg bagfile).bag" output="screen" required="true" >
-        <remap if="$(arg processNewPath)" from="/path_duplication_node/virtualLeadRpv" to="/path_duplication_node/virtualLeadRpv_live"/>
-        <remap if="$(arg processNewPath)" from="/path_duplication_node/headingControlReference" to="/path_duplication_node/headingControlReference_live"/>
-        <remap if="$(arg processNewPath)" from="/path_duplication_node/path" to="/path_duplication_node/path_live"/>
-        <remap if="$(arg processNewPath)" from="/path_duplication_node/headingDesired" to="/path_duplication_node/headingDesired_live"/>
+    <param name="use_sim_time" value="true"/>
+    <node name="rosbag" pkg="rosbag" type="play" args="--clock -s 30 -r 1.0 $(arg bagpath)/path_duplication_$(arg setId).bag" output="screen" required="true" >
+        <remap if="$(arg processNewPath)" from="/path_duplication_node/virtualLeadRpv" to="/path_duplication_node_live/virtualLeadRpv"/>
+        <remap if="$(arg processNewPath)" from="/path_duplication_node/headingControlReference" to="/path_duplication_node_live/headingControlReference"/>
+        <remap if="$(arg processNewPath)" from="/path_duplication_node/path" to="/path_duplication_node_live/path"/>
+        <remap if="$(arg processNewPath)" from="/path_duplication_node/headingDesired" to="/path_duplication_node_live/headingDesired"/>
         <remap from="/tf" to="/tf_live"/>
     </node>
 
@@ -42,7 +25,7 @@
     <include if="$(arg processNewPath)" file="$(find path_duplication)/launch/path_duplication.launch"/>
 
     <!-- command velocity repeater -->
-    <node name="cmd_vel_zoh" pkg="path_duplication" type="cmd_vel_zoh.py" output="screen" />
+    <!-- <node name="cmd_vel_zoh" pkg="path_duplication" type="cmd_vel_zoh.py" output="screen" /> -->
 
     <!-- WGS Conversions Server -->
     <node name="wgs_server" pkg="wgs_conversions" type="wgs_conversions_server" output="screen" />
@@ -54,7 +37,7 @@
     <node name="rviz" pkg="rviz" type="rviz" output="screen" args="-d $(find path_duplication)/rviz/path.rviz"/>
 
     <!-- TDCP (lead) -->
-    <node pkg="tdcp" type="tdcp_node" name="tdcp_front" output="screen" >
+    <node if="false" pkg="tdcp" type="tdcp_node" name="tdcp_front" output="screen" >
         <param name="elevation_mask_angle" value="15.0"/>
         <param name="ephemeris_topic" value="/novatel_front/gpsEphemerisTagged" type="string"/>
         <param name="raw_measurements_topic" value="/novatel_front/rawMeasurementsTagged" type="string"/>

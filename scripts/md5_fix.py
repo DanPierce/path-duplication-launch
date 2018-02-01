@@ -10,11 +10,20 @@ import rosbag
 from ros_sensor_msgs.msg import RawMeasurementsTagged,AssuranceLevel,GpsEphemerisTagged,Tags
 from drtk.msg import DrtkOutput
 
+rospy.init_node('md5_fix')
+
+dirPath = rospy.get_param('~directory_path','~/data/')
+inpBagName = rospy.get_param('~input_bag','here')
+outBagName = rospy.get_param('~output_bag','there')
+
 def fixBagfile(inputBagfile,outputBagfile):
 
     rawTopic1 = '/novatel_rear/rawMeasurementsTagged'
     rawTopic2 = '/novatel_front/rawMeasurementsTagged'
-    ephemTopic = '/novatel_rear/gpsEphemerisTagged'
+    rawTopic3 = '/novatel_base/rawMeasurementsTagged'
+    ephemTopic1 = '/novatel_rear/gpsEphemerisTagged'
+    ephemTopic2 = '/novatel_front/gpsEphemerisTagged'
+    ephemTopic3 = '/novatel_base/gpsEphemerisTagged'
     drtkTopic = '/drtk_node/drtkOutput'
 
     t_init = 0.0
@@ -26,7 +35,7 @@ def fixBagfile(inputBagfile,outputBagfile):
 
             # print topic
 
-            if (topic == rawTopic1) or (topic == rawTopic2):
+            if (topic == rawTopic1) or (topic == rawTopic2) or (topic == rawTopic3):
 
                 outMsg = RawMeasurementsTagged()
 
@@ -43,7 +52,7 @@ def fixBagfile(inputBagfile,outputBagfile):
 
                     setattr(outMsg, slot, subOutMsg)
             
-            elif topic == ephemTopic:
+            elif (topic == ephemTopic1) or (topic == ephemTopic2) or (topic == ephemTopic3):
 
                 outMsg = GpsEphemerisTagged()
 
@@ -83,9 +92,32 @@ def fixBagfile(inputBagfile,outputBagfile):
 
     # print 'To time = ',t_final,' (Duration = ',t_final-t_init,')'
 
+def getFullPath(dirPath,bagfileName):
+    # Fix directory path
+    end = len(dirPath) - 1
+    if dirPath[end] is not '/':
+        dirPath = dirPath + '/'
 
+    # Fix bagfile name
+    end = len(bagfileName) - 1
+    if bagfileName[(end-3):(end+1)] != '.bag':
+        bagfileName = bagfileName + '.bag'
 
+    return dirPath + bagfileName
 
+def main(args):
 
-# if __name__ == '__main__':
-#   main(sys.argv)
+    if (len(args)>1):
+        inpBag = args[1]
+        outBag = args[2]
+    else:
+        inpBag = getFullPath(dirPath,inpBagName)
+        outBag = getFullPath(dirPath,outBagName)
+
+    print 'input bagfile: ' + inpBag
+    print 'output bagfile: ' + outBag
+
+    fixBagfile(inpBag,outBag)
+
+if __name__ == '__main__':
+  main(sys.argv)

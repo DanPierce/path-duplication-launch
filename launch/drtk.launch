@@ -18,6 +18,8 @@
   
   <param name="max_raw_measurement_queue_size" value="25" />
 
+  <param name="ambiguity_verification_count_threshold" value="4" />
+  
   </node>
 
 </launch>
