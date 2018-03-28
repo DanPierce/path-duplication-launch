@@ -5,6 +5,7 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
+        - /Odometry1
       Splitter Ratio: 0.5
     Tree Height: 467
   - Class: rviz/Selection
@@ -134,7 +135,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: ned
+    Fixed Frame: map
     Frame Rate: 30
   Name: root
   Tools:
@@ -155,7 +156,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 103.298
+      Distance: 115.694
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
@@ -188,5 +189,5 @@ Window Geometry:
   Views:
     collapsed: true
   Width: 1200
-  X: 444
-  Y: 73
+  X: 524
+  Y: 137

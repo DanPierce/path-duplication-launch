@@ -1,0 +1,10 @@
+<launch>
+
+    <group ns="mkz">
+      <rosparam file="$(find gavlab_vehicle_description)/garage/mkz.yaml" command="load" />
+    </group>
+
+    <!-- mkz path following control -->
+    <node pkg="mkz_control" type="mkz_path_following_node.py" name="mkz_path_following_node" output="screen" required="true"/>
+
+</launch>

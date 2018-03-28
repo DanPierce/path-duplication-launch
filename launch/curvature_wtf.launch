@@ -1,11 +1,6 @@
 <launch>
 
-  <arg name="doPath" default="true"/>
-  <arg name="doBag" default="true"/>
   <arg name="setId" default="1"/>
-  <arg name="drtkFront" default="true"/>
-  <arg name="startTime" default="0"/>
-  <arg name="bagOutput" default="screen"/>
 
   <!-- arguments -->
   <arg name="bagpath" default="/media/psf/Home/Google\ Drive/GAVLAB/data/mkz/path_duplication_1_13_18"/>

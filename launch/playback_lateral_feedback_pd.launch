@@ -1,0 +1,44 @@
+<launch>
+
+    <arg name="setId" default="1"/>
+
+    <!-- arguments -->
+    <arg name="bagpath" default="/media/psf/Home/Google\ Drive/GAVLAB/data/mkz/path_duplication_1_13_18"/>
+
+    <!-- rosbag play -->
+    <param name="use_sim_time" value="true"/>
+
+    <arg name="bagOutput" default="screen"/>
+    <node name="rosbag" pkg="rosbag" type="play" args="--clock -q -s 20 -r 1.0 $(arg bagpath)/path_duplication_$(arg setId).bag" output="$(arg bagOutput)" required="true" >
+        <remap from="/path_duplication_node/virtualLeadRpv" to="/path_duplication_node_live/virtualLeadRpv"/>
+        <remap from="/path_duplication_node/headingControlReference" to="/path_duplication_node_live/headingControlReference"/>
+        <remap from="/path_duplication_node/path" to="/path_duplication_node_live/path"/>
+        <remap from="/path_duplication_node/headingDesired" to="/path_duplication_node_live/headingDesired"/>
+        <remap from="/tf" to="/tf_live"/>
+        <remap from="/vehicle/steering_cmd" to="/vehicle_live/steering_cmd"/>
+
+    </node>
+
+    <!-- global parameters -->
+    <param name="latitude_reference" value="32.5955"/> <!-- Skid pad lat/long -->
+    <param name="longitude_reference" value="-85.2954"/>
+
+    <!-- WGS Conversions Server -->
+    <node name="wgs_server" pkg="wgs_conversions" type="wgs_conversions_server" output="screen" />
+
+    <!-- path duplication -->
+    <include file="$(find path_duplication_launch)/launch/path_duplication.launch"/>
+
+    <!-- TF broadcaster -->
+    <node name="nav_to_tf" pkg="path_duplication" type="nav_to_tf.py" output="screen" />
+
+    <!-- mkz_control -->
+    <include file="$(find path_duplication_launch)/launch/mkz_control.launch"/>
+
+    <!-- Rviz -->
+    <node name="rviz" pkg="rviz" type="rviz" output="screen" args="-d $(find path_duplication)/rviz/pathPlaybackComp.rviz"/>
+    
+    <!-- record -->
+    <!-- <node name="bagman" pkg="rosbag" type="record" args="-a -b 0 -O z_path_duplication_2018-01-13-18-35-49.bag" /> -->
+    
+</launch>

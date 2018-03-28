@@ -1,17 +1,64 @@
 <launch>
     
-  <arg name="vehicle" default="G35"/>
+    <group ns="g35">
+      
+      <arg name="vehicle" default="g35"/>
 
-  <node pkg="gavlab_vehicle_description" type="tf_broadcaster.py" name="g35_tf_broadcaster" output="screen" >
+      <node pkg="gavlab_vehicle_description" type="tf_broadcaster.py" name="$(arg vehicle)_tf_broadcaster" output="screen" >
 
-    <param name="marker_frame_id" value="follower_base"/>
+        <param name="marker_frame_id" value="follower_base"/>
 
-    <param name="nav_topic" value="/gps_ins_node/odom"/>
-    <param name="update_rate" value="20.0"/>
-    
-    <rosparam file="$(find gavlab_vehicle_description)/garage/$(arg vehicle).yaml" command="load" />
-  </node>
+        <param name="tf_prefix" value="$(arg vehicle)_"/>
 
-  <param name="robot_description" textfile="$(find gavlab_vehicle_description)/urdf/$(arg vehicle).urdf" />
+        <param name="nav_topic" value="/gps_ins_node/odom"/>
+        <param name="update_rate" value="20.0"/>
+        
+        <rosparam file="$(find gavlab_vehicle_description)/garage/$(arg vehicle).yaml" command="load" />
+      </node>
 
+      <param name="robot_description" textfile="$(find gavlab_vehicle_description)/urdf/$(arg vehicle).urdf" />
+
+    </group>
+
+
+
+    <group ns="mkz">
+      
+      <arg name="vehicle" default="mkz"/>
+
+      <node if="false" pkg="gavlab_vehicle_description" type="tf_broadcaster_wtf.py" name="$(arg vehicle)_tf_broadcaster" output="screen" >
+
+        <param name="marker_frame_id" value="leader_base"/>
+
+        <param name="tf_prefix" value=""/>
+
+        <param name="nav_topic" value="/novatel_front/odom2d"/>
+        <param name="update_rate" value="2.0"/>
+        
+        <rosparam file="$(find gavlab_vehicle_description)/garage/$(arg vehicle).yaml" command="load" />
+      </node>
+
+
+    </group>
+
+  <group ns="vehicle">
+    <include file="$(find dbw_mkz_description)/launch/mkz.launch" />
+  </group>
+
+
+    <!-- <node pkg="tf" type="static_transform_publisher" name="idx_wtf_broadcaster" args="0 0 0 0 0 0 1 leader_base base_footprint 50" /> -->
+
+    <!-- <node pkg="tf" type="static_transform_publisher" name="idx_wtf_broadcaster" args="0 0 0 0 0 0 1 base_footprint base_link 10" /> -->
+
+      <!-- <param name="g35_tf_prefix" value="g35_" /> -->
+
+
+    <!-- <node pkg="robot_state_publisher" type="robot_state_publisher" name="rob_st_pub" > -->
+      <!-- <remap from="robot_description" to="g35_robot_description" /> -->
+      <!-- <remap from="tf_prefix" to="g35_tf_prefix" /> -->
+      <!-- <remap from="joint_states" to="g35_joint_states" /> -->
+    <!-- </node> -->
+
+
+  <!-- </group> -->
 </launch>

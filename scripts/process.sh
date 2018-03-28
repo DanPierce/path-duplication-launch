@@ -8,19 +8,8 @@
 # bar=$(a command)
 # logfile=$logdir/foo-$(date +%Y%m%d)
 
-roslaunch path_duplication_launch drtk_for_pd_truth.launch filename:=path_duplication_2018-01-13-18-10-52
-
-
-
-roslaunch path_duplication_launch drtk_for_pd_truth.launch filename:=path_duplication_2018-01-13-18-20-04
-
-
-
-roslaunch path_duplication_launch drtk_for_pd_truth.launch filename:=path_duplication_2018-01-13-18-27-49
-
-
-roslaunch path_duplication_launch drtk_for_pd_truth.launch filename:=path_duplication_2018-01-13-18-35-49
-
-
-
+# roslaunch path_duplication_launch drtk_for_pd_truth.launch setId:=1
+roslaunch path_duplication_launch drtk_for_pd_truth.launch setId:=4
+roslaunch path_duplication_launch drtk_for_pd_truth.launch setId:=3
+roslaunch path_duplication_launch drtk_for_pd_truth.launch setId:=2
 
