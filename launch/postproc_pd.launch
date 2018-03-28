@@ -1,0 +1,34 @@
+<launch>
+
+    <!-- arguments -->
+    <arg name="bagfile" default="/media/psf/Home/Google\ Drive/GAVLAB/data/path_duplication/drtk_uwb_rpv_3_13_18/drtk_and_uwb_rpv_2018-03-13-14-27-46"/>
+
+    <!-- rosbag play -->
+    <param name="use_sim_time" value="true"/>
+
+    <arg name="bagOutput" default="screen"/>
+    <node name="rosbag" pkg="rosbag" type="play" args="--clock -q -s 20 -r 1.0 $(arg bagfile).bag" output="$(arg bagOutput)" required="true" >
+        <remap from="/vehicle/steering_cmd" to="/vehicle_live/steering_cmd"/>
+
+    </node>
+
+    <!-- global parameters -->
+    <param name="latitude_reference" value="32.6059"/> <!-- B-zone by The Village -->
+    <param name="longitude_reference" value="-85.4935"/>
+
+    <!-- TDCP -->
+    <include file="$(find path_duplication_launch)/launch/tdcp.launch"/>
+
+    <!-- GPS/INS -->
+    <include file="$(find path_duplication_launch)/launch/kvh_gps_ins.launch" />
+
+    <!-- Path Duplication -->
+    <include file="$(find path_duplication_launch)/launch/path_duplication.launch"/>
+
+    <!-- MKZ Control -->
+    <!-- <include file="$(find mkz_control)/launch/mkz_steer_control.launch"/> -->
+
+    <!-- Rosbag record -->
+    <!-- <node pkg="rosbag" type="record" name="bagman" args="-a -b 0 -o /home/gavlab/devel/convoy_ws/data/path_duplication/path_duplication"/> -->
+
+</launch>
