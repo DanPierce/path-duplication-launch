@@ -32,6 +32,6 @@
     <include file="$(find path_duplication_launch)/launch/dbw_for_steer_only.launch"/>
 
     <!-- Rosbag record -->
-    <node pkg="rosbag" type="record" name="bagman" args="-a -b 0 -o /home/gavlab/devel/convoy_ws/data/path_duplication/pd_demo"/>
+    <node pkg="rosbag" type="record" name="bagman" args="-a -b 0 -o /home/gavlab/devel/path_duplication_ws/data/path_duplication/pd_demo"/>
 
 </launch>

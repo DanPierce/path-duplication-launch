@@ -1,7 +1,7 @@
 <launch>
 
   <!-- Start the drtk node -->
-  <node pkg="drtk" type="drtk_ros_node" name="drtk_node" output="screen" required="true">
+  <node pkg="drtk" type="drtk_node" name="drtk_node" output="screen" required="true">
 
   <!-- Name ROS topics -->
   <param name="raw_measurements_tagged_local_topic_name"  type="str" value="/novatel_rear/rawMeasurementsTagged" />
