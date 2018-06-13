@@ -8,7 +8,7 @@
       <param name="queue_size" value="0"/>
 
       <param name="gps_time_step" value="0.5"/>
-      <param name="lookahead_distance_scale" value="1.0"/>
+      <param name="lookahead_distance_scale" value="1.5"/>
       <param name="lookahead_distance_minimum" value="1.0"/>
       <param name="require_precise_drtk" value="true"/>
 

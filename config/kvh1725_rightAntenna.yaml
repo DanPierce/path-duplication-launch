@@ -1,4 +1,4 @@
-gps_topic_name: /novatel_front/odom
+gps_topic_name: /novatel_right/odom
 imu_topic_name: /kvh/imu
 
 imu_time_step: 0.01
@@ -34,6 +34,6 @@ input_rotation_matrix: [ 1,  0,  0,
                          0,  0, -1]
 
 # offset from IMU to antenna 
-longitudinal_antenna_offset: 1.181
-lateral_antenna_offset: 0.966
-vertical_antenna_offset: -0.9474
+longitudinal_antenna_offset: 1.13
+lateral_antenna_offset: 0.62
+vertical_antenna_offset: -0.95

@@ -1,9 +1,9 @@
 <launch>
 	
 	<!-- Start the novatel node -->
-	<node pkg="novatel" type="novatel_node" name="novatel_rear" output="screen" 
+	<node pkg="novatel" type="novatel_node" name="novatel_rear" output="log" 
 	    required="true">
-		<param name="port" value="/dev/ttyUSB1" />
+		<param name="port" value="/dev/ttyS0" />
 		<param name="baudrate" value="115200" />
 
 	    <param name="log_ephemeris" value="true" />

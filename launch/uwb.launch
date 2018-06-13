@@ -1,0 +1,18 @@
+<launch>
+
+  <node name="rcm_node" pkg="timedomain_uwb" type="rcm_node.py"
+    output="screen" required="true">
+
+    <!-- <param name="device0" value="/dev/ttyACM0"/> -->
+    <!-- <param name="device1" value="/dev/ttyACM1"/> -->
+
+    <param name="ip_address0" value="192.168.1.100"/>
+    <param name="ip_address1" value="192.168.1.101"/>
+    <!-- <param name="ip_address2" value="192.168.1.102"/> -->
+
+    <param name="responderId0" value="102"/>
+    <param name="responderId1" value="103"/>
+
+  </node>
+
+</launch>

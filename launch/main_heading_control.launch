@@ -4,14 +4,14 @@
     <param name="latitude_reference" value="32.5955"/> <!-- Skid pad lat/long -->
     <param name="longitude_reference" value="-85.2954"/>
 
-    <!-- IMU -->
-    <include file="$(find path_duplication_launch)/launch/crossbow.launch"/>
+    <!-- KVH -->
+    <include file="$(find path_duplication_launch)/launch/kvh1725.launch"/>
+
+    <!-- GPS/INS -->
+    <include file="$(find path_duplication_launch)/launch/kvh_gps_ins.launch" />
 
     <!-- Novatel -->
     <include file="$(find path_duplication_launch)/launch/novatel_rear.launch"/>
-
-    <!-- GPS/INS -->
-    <include file="$(find path_duplication_launch)/launch/gps_ins.launch"/>
 
     <!-- Heading error publisher -->
     <node pkg="prowler_steer_control" type="heading_error_publisher.py" name="heading_error_publisher" output="screen" required="true">

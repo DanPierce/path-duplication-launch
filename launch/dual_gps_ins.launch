@@ -1,0 +1,12 @@
+<launch>
+    
+    <!-- GPS/INS -->
+    <param name="axes_convention" value="ned"/>
+
+    <node pkg="ins_ekf" type="dual_gps_ins_node" name="dual_gps_ins_node" output="screen" >
+        <!-- Note: parameters specified in the launch file will overwrite those in the yaml file -->
+        <rosparam file="$(find ins_ekf)/config/dual_gps_ins.yaml" command="load" />
+        <param name="queue_size" value="1000"/>
+    </node>
+
+</launch>

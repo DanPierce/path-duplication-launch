@@ -1,0 +1,28 @@
+<launch>
+
+    <!-- global parameters -->
+    <param name="latitude_reference" value="32.5955"/> <!-- Skid pad lat/long -->
+    <param name="longitude_reference" value="-85.2954"/>
+
+    <!-- Novatel (follower) -->
+    <include file="$(find path_duplication_launch)/launch/novatel_rear.launch"/>
+
+    <!-- Novatel (follower, right) -->
+    <include file="$(find path_duplication_launch)/launch/novatel_rear_right.launch"/>
+
+    <!-- KVH -->
+    <include file="$(find path_duplication_launch)/launch/kvh1725.launch"/>
+
+    <!-- DRTK Dual -->
+    <include file="$(find path_duplication_launch)/launch/drtk_dual.launch"/>
+
+    <!-- GPS/INS -->
+    <include file="$(find path_duplication_launch)/launch/kvh_gps_ins.launch" />
+
+    <!-- DBW -->
+    <include file="$(find path_duplication_launch)/launch/dbw_for_steer_only.launch"/>
+
+    <!-- Rosbag record -->
+    <node pkg="rosbag" type="record" name="bagman" args="-a -b 0 -o /home/gavlab/devel/convoy_ws/data/sys_id/dual_antenna_sys_id"/>
+
+</launch>

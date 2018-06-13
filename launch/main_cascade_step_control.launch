@@ -1,0 +1,32 @@
+<launch>
+
+    <!-- global parameters -->
+    <param name="latitude_reference" value="32.5955"/> <!-- Skid pad lat/long -->
+    <param name="longitude_reference" value="-85.2954"/>
+
+    <!-- KVH -->
+    <include file="$(find path_duplication_launch)/launch/kvh1725.launch"/>
+
+    <!-- GPS/INS -->
+    <include file="$(find path_duplication_launch)/launch/kvh_gps_ins.launch" />
+
+    <!-- Novatel -->
+    <include file="$(find path_duplication_launch)/launch/novatel_rear.launch"/>
+
+    <!-- Lat pos error publisher -->
+    <node pkg="mkz_control" type="lat_pos_publisher.py" name="lat_pos_publisher" output="screen" required="true">
+
+    </node>
+
+    <!-- MKZ Cascaded Control -->
+    <node pkg="mkz_control" type="cascaded_lateral_control.py" name="cascaded_lateral_control" output="screen" required="true">
+        <param name="lateral_path_error_topic" value="/lat_pos_publisher/lateralError"/>
+        <param name="lateral_path_error_topic" value="/lat_pos_publisher/yawError"/>
+
+    </node>
+
+
+    <!-- Rosbag record -->
+    <node pkg="rosbag" type="record" name="bagman" args="-a -b 0 -o /home/gavlab/devel/path_duplication_ws/data/heading_control"/>
+
+</launch>

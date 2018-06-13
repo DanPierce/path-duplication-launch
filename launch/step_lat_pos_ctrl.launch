@@ -1,0 +1,46 @@
+<launch>
+
+    <!-- global parameters -->
+    <param name="latitude_reference" value="32.5955"/> <!-- Skid pad lat/long -->
+    <param name="longitude_reference" value="-85.2954"/>
+
+    <param name="use_sim_time" value="false"/>
+
+    <!-- WGS Conversions Server -->
+    <node pkg="wgs_conversions" type="wgs_conversions_server" name="wgs_conversions_server" output="screen" required="true"/>
+
+    <!-- Novatel (follower) -->
+    <include file="$(find path_duplication_launch)/launch/novatel_rear.launch"/>
+
+    <!-- Novatel (follower, right) -->
+    <include file="$(find path_duplication_launch)/launch/novatel_rear_right.launch"/>
+
+    <!-- KVH -->
+    <include file="$(find path_duplication_launch)/launch/kvh1725.launch"/>
+
+    <!-- DRTK Dual -->
+    <include file="$(find path_duplication_launch)/launch/drtk_dual.launch"/>
+
+    <!-- TDCP -->
+    <include file="$(find path_duplication_launch)/launch/tdcp.launch"/>
+
+    <!-- GPS/INS -->
+    <include file="$(find path_duplication_launch)/launch/kvh_gps_ins.launch" />
+
+    <!-- MKZ Control -->
+<!--     <node pkg="mkz_control" type="step_lateral_ref_test.py" name="step_lateral_ref_test" output="screen" required="true">
+
+        <param name="navigation_solution_topic" value="/dual_gps_ins_node/odom"/>
+        <param name="reference_interval_time" value="5.0"/>
+        <param name="step_reference_magnitude" value="1.0"/>
+
+    </node> -->
+
+
+    <!-- DBW -->
+    <include file="$(find path_duplication_launch)/launch/dbw_for_steer_only.launch"/>
+
+    <!-- Rosbag record -->
+    <!-- <node pkg="rosbag" type="record" name="bagman" args="-a -b 0 -o /home/gavlab/devel/convoy_ws/data/steplatpos/skidpad"/> -->
+
+</launch>

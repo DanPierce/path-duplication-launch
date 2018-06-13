@@ -10,6 +10,9 @@
     <!-- Novatel (leader) -->
     <include file="$(find path_duplication_launch)/launch/novatel_front.launch"/>
 
+    <!-- Novatel (rear right) -->
+    <include file="$(find path_duplication_launch)/launch/novatel_rear_right.launch"/>
+
     <!-- KVH -->
     <include file="$(find path_duplication_launch)/launch/kvh1725.launch"/>
 
@@ -20,18 +23,21 @@
     <include file="$(find path_duplication_launch)/launch/tdcp.launch"/>
 
     <!-- GPS/INS -->
-    <include file="$(find path_duplication_launch)/launch/kvh_gps_ins.launch" />
+  <!-- GPS/INS -->
+  <node pkg="ins_ekf" type="gps_ins_node" name="gps_ins_node" output="screen" required="true">
+    <rosparam file="$(find path_duplication_launch)/config/kvh1725_leftAntenna.yaml" command="load" />
+  </node>
 
     <!-- Path Duplication -->
     <include file="$(find path_duplication_launch)/launch/path_duplication.launch"/>
 
-    <!-- MKZ Steer Control -->
-    <include file="$(find path_duplication_launch)/launch/mkz_control.launch"/>
+    <!-- MKZ Cascaded Control -->
+    <node pkg="mkz_control" type="cascaded_lateral_control.py" name="cascaded_lateral_control" output="screen" required="true"/>
 
     <!-- DBW -->
     <include file="$(find path_duplication_launch)/launch/dbw_for_steer_only.launch"/>
 
     <!-- Rosbag record -->
-    <node pkg="rosbag" type="record" name="bagman" args="-a -b 0 -o /home/gavlab/devel/convoy_ws/data/path_duplication/pd_demo"/>
+    <node pkg="rosbag" type="record" name="bagman" args="-a -b 0 -o /home/gavlab/devel/convoy_ws/data/latposctrl/skidpad"/>
 
 </launch>
