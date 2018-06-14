@@ -1,0 +1,12 @@
+<launch>
+
+    <!-- WGS Conversions Server -->
+    <node name="wgs_server" pkg="wgs_conversions" type="wgs_conversions_server" output="screen" />
+
+    <!-- TF broadcaster -->
+    <node name="nav_to_tf" pkg="path_duplication" type="nav_to_tf.py" output="screen" />
+
+    <!-- Rviz -->
+    <node name="rviz" pkg="rviz" type="rviz" output="screen" args="-d $(find path_duplication)/rviz/path.rviz"/>
+
+</launch>

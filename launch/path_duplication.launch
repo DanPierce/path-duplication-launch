@@ -11,7 +11,8 @@
       <param name="lookahead_distance_scale" value="1.5"/>
       <param name="lookahead_distance_minimum" value="1.0"/>
       <param name="require_precise_drtk" value="true"/>
-
+      
+      <param name="minimum_waypoint_spacing" value="0.5"/>
 
   </node>
 
