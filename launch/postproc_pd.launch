@@ -1,34 +1,46 @@
 <launch>
 
     <!-- arguments -->
-    <arg name="bagfile" default="/media/psf/Home/Google\ Drive/GAVLAB/data/path_duplication/drtk_uwb_rpv_3_13_18/drtk_and_uwb_rpv_2018-03-13-14-27-46"/>
+    <arg name="bagpath" default="/media/psf/Home/gavlab_local/data/path_duplication/uwb_path_6_28_18/skid_pad_final_3.bag"/>
+    <arg name="bagfile" default="skid_pad_final_1_gpsRosTimeFix.bag"/>
 
     <!-- rosbag play -->
     <param name="use_sim_time" value="true"/>
 
-    <arg name="bagOutput" default="screen"/>
-    <node name="rosbag" pkg="rosbag" type="play" args="--clock -q -s 20 -r 1.0 $(arg bagfile).bag" output="$(arg bagOutput)" required="true" >
-        <remap from="/vehicle/steering_cmd" to="/vehicle_live/steering_cmd"/>
-
+    <node name="rosbag" pkg="rosbag" type="play" args="--clock -q -s 0 -r 1.0 $(arg bagpath)/$(arg bagfile)" required="true" >
     </node>
 
     <!-- global parameters -->
-    <param name="latitude_reference" value="32.6059"/> <!-- B-zone by The Village -->
-    <param name="longitude_reference" value="-85.4935"/>
+    <!-- <param name="latitude_reference" value="32.6059"/> --> <!-- B-zone by The Village -->
+    <!-- <param name="longitude_reference" value="-85.4935"/> -->
 
-    <!-- TDCP -->
-    <include file="$(find path_duplication_launch)/launch/tdcp.launch"/>
+    <param name="latitude_reference" value="32.5955"/> <!-- Skid pad lat/long -->
+    <param name="longitude_reference" value="-85.2954"/>
 
     <!-- GPS/INS -->
-    <include file="$(find path_duplication_launch)/launch/kvh_gps_ins.launch" />
-
+  <node pkg="ins_ekf" type="gps_ins_node" name="gps_ins_node" output="screen" required="true">
+    <!-- Note: parameters declared in the launch file will overwrite those in the yaml file -->
+    <rosparam file="$(find path_duplication_launch)/config/kvh1725_centerMiddleAntenna.yaml" command="load" />
+    <param name="queue_size" value="1000"/>
+  </node>
     <!-- Path Duplication -->
-    <include file="$(find path_duplication_launch)/launch/path_duplication.launch"/>
+      <node pkg="path_duplication" type="path_duplication_node" name="path_duplication_node" output="screen" required="true">
 
-    <!-- MKZ Control -->
-    <!-- <include file="$(find mkz_control)/launch/mkz_steer_control.launch"/> -->
+          <param name="tdcp_topic" value="/tdcp_node/tdcpOutput" type="string"/>
+          <param name="drtk_topic" value="/drtk_node/drtkOutput" type="string"/>
+          <param name="queue_size" value="10000"/>
+
+          <param name="gps_time_step" value="0.5"/>
+          <param name="lookahead_distance_scale" value="1.0"/>
+          <param name="lookahead_distance_minimum" value="1.0"/>
+          <param name="require_precise_drtk" value="true"/>
+
+        <param name="minimum_waypoint_spacing" value="0.5"/>
+
+
+      </node>
 
     <!-- Rosbag record -->
-    <!-- <node pkg="rosbag" type="record" name="bagman" args="-a -b 0 -o /home/gavlab/devel/convoy_ws/data/path_duplication/path_duplication"/> -->
+    <node pkg="rosbag" type="record" name="bagman" args="-a -b 0 -O $(arg bagpath)/processed/$(arg bagfile)"/>
 
 </launch>
