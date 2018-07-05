@@ -1,7 +1,7 @@
 <launch>
 
     <!-- arguments -->
-    <arg name="bagpath" default="/media/psf/Home/gavlab_local/data/path_duplication/uwb_path_6_28_18/skid_pad_final_3.bag"/>
+    <arg name="bagpath" default="/media/psf/Home/gavlab_local/data/path_duplication/uwb_path_6_28_18"/>
     <arg name="bagfile" default="skid_pad_final_1_gpsRosTimeFix.bag"/>
 
     <!-- rosbag play -->
@@ -25,7 +25,6 @@
   </node>
     <!-- Path Duplication -->
       <node pkg="path_duplication" type="path_duplication_node" name="path_duplication_node" output="screen" required="true">
-
           <param name="tdcp_topic" value="/tdcp_node/tdcpOutput" type="string"/>
           <param name="drtk_topic" value="/drtk_node/drtkOutput" type="string"/>
           <param name="queue_size" value="10000"/>
@@ -36,11 +35,9 @@
           <param name="require_precise_drtk" value="true"/>
 
         <param name="minimum_waypoint_spacing" value="0.5"/>
-
-
       </node>
 
     <!-- Rosbag record -->
-    <node pkg="rosbag" type="record" name="bagman" args="-a -b 0 -O $(arg bagpath)/processed/$(arg bagfile)"/>
+    <node pkg="rosbag" type="record" name="bagman" args="-a -b 0 -O /home/parallels/Desktop/processed/$(arg bagfile)"/>
 
 </launch>
