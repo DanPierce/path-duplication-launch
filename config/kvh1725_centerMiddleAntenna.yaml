@@ -37,3 +37,5 @@ input_rotation_matrix: [ 1,  0,  0,
 longitudinal_antenna_offset: 1.13
 lateral_antenna_offset: 0.0
 vertical_antenna_offset: -0.95
+
+gps_position_covariance_scale: 0.1
