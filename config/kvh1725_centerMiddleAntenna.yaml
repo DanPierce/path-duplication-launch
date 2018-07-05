@@ -15,7 +15,9 @@ queue_size: 1
 # initial_position_std_dev: 0.3
 # initial_velocity_std_dev: 0.1
 
-initial_attitude_std_dev: 0.035
+initial_attitude_std_dev: 0.05
+# 0.1 rad ~= 6 deg
+# 0.035 rad ~= 2 deg
 
 gps_position_updates: true
 gps_velocity_updates: true
@@ -34,6 +36,6 @@ input_rotation_matrix: [ 1,  0,  0,
                          0,  0, -1]
 
 # offset from IMU to antenna 
-longitudinal_antenna_offset: 0.381
+longitudinal_antenna_offset: 1.13
 lateral_antenna_offset: 0.0
-vertical_antenna_offset: -0.762
+vertical_antenna_offset: -0.95
