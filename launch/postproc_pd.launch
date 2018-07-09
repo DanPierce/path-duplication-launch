@@ -2,28 +2,48 @@
 
     <!-- arguments -->
     <arg name="bagpath" default="/media/psf/Home/gavlab_local/data/path_duplication/uwb_path_6_28_18"/>
-    <!-- <arg name="bagfile" default="skid_pad_final_1_gpsRosTimeFix.bag"/> -->
-    <arg name="bagfile" default="skid_pad_final_1.bag"/>
+    <!-- <arg name="bagfile" default="skid_pad_final_3_gpsRosTimeFix.bag"/> -->
+    <arg name="bagfile" default="track_straight_3.bag"/>
+
+    <!-- <arg name="bagpath" default="/media/psf/Home/gavlab_local/data/path_duplication/uwb_path_6_6_18/md5"/> -->
+    <!-- <arg name="bagfile" default="village_no_wire_3.bag"/> -->
+    
+
+         <!-- B-zone by The Village -->
+    <!-- <param name="latitude_reference" value="32.6059"/> -->
+    <!-- <param name="longitude_reference" value="-85.4935"/> -->
+
+    <!-- Skid pad lat/long -->
+    <param name="latitude_reference" value="32.5955"/> 
+    <param name="longitude_reference" value="-85.2954"/>
+
+
+
+    <!--            -->
+
 
     <!-- rosbag play -->
     <param name="use_sim_time" value="true"/>
 
     <node name="rosbag" pkg="rosbag" type="play" args="--clock -q -s 0 -r 1.0 $(arg bagpath)/$(arg bagfile)" required="true" >
+      <!-- <remap from="/path_duplication_node/curvature" to="/path_duplication_live/curvature"/> -->
+      <!-- <remap from="/path_duplication_node/followingDistance" to="/path_duplication_live/followingDistance"/> -->
+      <!-- <remap from="/path_duplication_node/lateralError" to="/path_duplication_live/lateralError"/> -->
+      <!-- <remap from="/path_duplication_node/path" to="/path_duplication_live/path"/> -->
+      <!-- <remap from="/path_duplication_node/tangentDirection" to="/path_duplication_live/tangentDirection"/> -->
+      <!-- <remap from="/path_duplication_node/virtualLeadRpv" to="/path_duplication_live/virtualLeadRpv"/> -->
     </node>
 
-    <!-- global parameters -->
-    <!-- <param name="latitude_reference" value="32.6059"/> --> <!-- B-zone by The Village -->
-    <!-- <param name="longitude_reference" value="-85.4935"/> -->
 
-    <param name="latitude_reference" value="32.5955"/> <!-- Skid pad lat/long -->
-    <param name="longitude_reference" value="-85.2954"/>
 
     <!-- GPS/INS -->
-  <node pkg="ins_ekf" type="gps_ins_node" name="gps_ins_node" output="screen" required="true">
-    <!-- Note: parameters declared in the launch file will overwrite those in the yaml file -->
+  <!-- <node pkg="ins_ekf" type="gps_ins_node" name="gps_ins_node" output="screen" required="true">
     <rosparam file="$(find path_duplication_launch)/config/kvh1725_centerMiddleAntenna.yaml" command="load" />
     <param name="queue_size" value="1000"/>
   </node>
+   -->
+
+
     <!-- Path Duplication -->
       <node pkg="path_duplication" type="path_duplication_node" name="path_duplication_node" output="screen" required="true">
           <param name="tdcp_topic" value="/tdcp_node/tdcpOutput" type="string"/>

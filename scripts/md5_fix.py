@@ -12,9 +12,9 @@ from drtk.msg import DrtkOutput
 
 rospy.init_node('md5_fix')
 
-dirPath = rospy.get_param('~directory_path','~/data/')
-inpBagName = rospy.get_param('~input_bag','here')
-outBagName = rospy.get_param('~output_bag','there')
+dirPath = rospy.get_param('~directory_path','/home/parallels/Desktop/uwb_path_6_6_18')
+inpBagName = rospy.get_param('~input_bag','village_no_wire_3.bag')
+outBagName = rospy.get_param('~output_bag','md5/village_no_wire_3.bag')
 
 def fixBagfile(inputBagfile,outputBagfile):
 
