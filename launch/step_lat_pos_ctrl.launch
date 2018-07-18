@@ -13,13 +13,13 @@
     <include file="$(find path_duplication_launch)/launch/novatel_rear.launch"/>
 
     <!-- Novatel (follower, right) -->
-    <include file="$(find path_duplication_launch)/launch/novatel_rear_right.launch"/>
+    <!-- <include file="$(find path_duplication_launch)/launch/novatel_rear_right.launch"/> -->
 
     <!-- KVH -->
     <include file="$(find path_duplication_launch)/launch/kvh1725.launch"/>
 
     <!-- DRTK Dual -->
-    <include file="$(find path_duplication_launch)/launch/drtk_dual.launch"/>
+    <include file="$(find path_duplication_launch)/launch/drtk.launch"/>
 
     <!-- TDCP -->
     <include file="$(find path_duplication_launch)/launch/tdcp.launch"/>
@@ -30,8 +30,8 @@
     <!-- MKZ Control -->
 <!--     <node pkg="mkz_control" type="step_lateral_ref_test.py" name="step_lateral_ref_test" output="screen" required="true">
 
-        <param name="navigation_solution_topic" value="/dual_gps_ins_node/odom"/>
-        <param name="reference_interval_time" value="5.0"/>
+        <param name="navigation_solution_topic" value="/gps_ins_node/odom"/>
+        <param name="reference_interval_time" value="100.0"/>
         <param name="step_reference_magnitude" value="1.0"/>
 
     </node> -->
