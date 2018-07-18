@@ -1,4 +1,4 @@
-gps_topic_name: /gps_truth_rear/odom
+gps_topic_name: /novatel_rear/odom
 imu_topic_name: /kvh/imu
 
 imu_time_step: 0.01
@@ -18,7 +18,7 @@ queue_size: 1
 initial_attitude_std_dev: 0.035
 
 gps_position_updates: true
-gps_velocity_updates: false
+gps_velocity_updates: true
 
 
 # IMU noise (values taken from Allan variance. See ASI Convoy QR 2)
@@ -34,6 +34,8 @@ input_rotation_matrix: [ 1,  0,  0,
                          0,  0, -1]
 
 # offset from IMU to antenna 
-longitudinal_antenna_offset: 0.381
+longitudinal_antenna_offset: 1.13
 lateral_antenna_offset: 0.0
-vertical_antenna_offset: -0.762
+vertical_antenna_offset: -0.95
+
+gps_position_covariance_scale: 0.1
