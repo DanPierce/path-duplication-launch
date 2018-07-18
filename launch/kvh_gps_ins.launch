@@ -5,7 +5,9 @@
 
     <!-- Note: parameters declared in the launch file will overwrite those in the yaml file -->
     <!-- <rosparam file="$(find path_duplication_launch)/config/kvh1725_rightAntenna.yaml" command="load" /> -->
-    <rosparam file="$(find path_duplication_launch)/config/kvh1725_centerAntenna.yaml" command="load" />
+    <!-- <rosparam file="$(find path_duplication_launch)/config/kvh1725_centerAntenna.yaml" command="load" /> -->
+
+    <rosparam file="$(find path_duplication_launch)/config/kvh1725_centerMiddleAntenna.yaml" command="load" />
     
     <param name="queue_size" value="1000"/>
   

@@ -19,10 +19,10 @@
     <include file="$(find path_duplication_launch)/launch/kvh1725.launch"/>
 
     <!-- DRTK Dual -->
-    <include file="$(find path_duplication_launch)/launch/drtk.launch"/>
+    <!-- <include file="$(find path_duplication_launch)/launch/drtk.launch"/> -->
 
     <!-- TDCP -->
-    <include file="$(find path_duplication_launch)/launch/tdcp.launch"/>
+    <!-- <include file="$(find path_duplication_launch)/launch/tdcp.launch"/> -->
 
     <!-- GPS/INS -->
     <include file="$(find path_duplication_launch)/launch/kvh_gps_ins.launch" />

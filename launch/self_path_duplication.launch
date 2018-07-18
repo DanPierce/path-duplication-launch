@@ -1,0 +1,26 @@
+<launch>
+
+    <!-- path duplication -->
+    <param name="/axes_convention" value="ned"/>
+
+    <node pkg="path_duplication" type="self_following_node" name="path_duplication_node" output="screen" required="true">
+
+        <param name="tdcp_topic" value="/tdcp_node/tdcpOutput" type="string"/>
+        <param name="drtk_topic" value="/drtk_node/drtkOutput" type="string"/>
+        <param name="nav_sol_topic" value="/gps_ins_node/odom" type="string"/>
+
+        <param name="queue_size" value="0"/>
+
+        <param name="gps_time_step" value="0.5"/>
+        <param name="lookahead_distance_scale" value="1.0"/>
+        <param name="lookahead_distance_minimum" value="1.0"/>
+        <param name="require_precise_drtk" value="true"/>
+        <param name="minimum_waypoint_spacing" value="0.5"/>
+
+    </node>
+
+    <!-- WGS Conversions Server -->
+    <node name="wgs_server" pkg="wgs_conversions" type="wgs_conversions_server" output="screen" />
+
+    
+</launch>
