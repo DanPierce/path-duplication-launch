@@ -1,0 +1,44 @@
+<launch>
+
+    <!-- global parameters -->
+    <!-- Skid pad lat/long -->
+    <!-- <param name="latitude_reference" value="32.5955"/>  -->
+    <!-- <param name="longitude_reference" value="-85.2954"/> -->
+
+
+    <param name="latitude_reference" value="32.5955"/> <!-- Skid pad lat/long -->
+    <param name="longitude_reference" value="-85.2954"/>
+
+    <!-- Novatel (follower) -->
+    <include file="$(find path_duplication_launch)/launch/novatel_rear.launch"/>
+
+    <!-- Novatel (leader) -->
+    <include file="$(find path_duplication_launch)/launch/novatel_front.launch"/>
+
+    <!-- KVH -->
+    <include file="$(find path_duplication_launch)/launch/kvh1725.launch"/>
+
+    <!-- GPS/INS -->
+    <include file="$(find path_duplication_launch)/launch/kvh_gps_ins.launch" />
+
+    <!-- DRTK -->
+    <include file="$(find path_duplication_launch)/launch/drtk.launch"/>
+
+    <!-- TDCP -->
+    <include file="$(find path_duplication_launch)/launch/tdcp.launch"/>
+
+    <!-- Path Duplication -->
+    <include file="$(find path_duplication_launch)/launch/self_path_duplication.launch"/>
+
+    <!-- MKZ Cascaded Control -->
+    <node pkg="mkz_control" type="cascade_lateral_control_node.py" name="cascade_lateral_control_node" output="screen" required="true"/>
+
+    <!-- DBW -->
+    <include file="$(find path_duplication_launch)/launch/dbw_for_steer_only.launch"/>
+
+    <node name="rviz" pkg="rviz" type="rviz" output="screen" args="-d $(find path_duplication)/rviz/path_ned.rviz"/>
+
+    <!-- Rosbag record -->
+    <node pkg="rosbag" type="record" name="bagman" args="-a -b 0 -o /home/gavlab/devel/path_duplication_ws/data/self_following/skidpad_take1"/>
+
+</launch>

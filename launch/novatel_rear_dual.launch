@@ -1,0 +1,18 @@
+<launch>
+
+	<arg name="pollPeriod" default="1.0" />	
+
+	<!-- Start the novatel node -->
+	<node pkg="novatel" type="novatel_node" name="novatel_rear" output="screen" required="true">
+
+		<param name="port" value="/dev/ttyUSB1" />
+		<param name="baudrate" value="115200" />
+
+    	<param name="gps_default_logs_period" value="$(arg pollPeriod)" />
+		<param name="range_default_logs_period" value="$(arg pollPeriod)" />
+		<param name="ephemeris_default_logs_period" value="10.0" />
+    	
+	</node>
+
+
+</launch>
