@@ -29,10 +29,18 @@
     <include file="$(find path_duplication_launch)/launch/path_duplication.launch"/>
 
     <!-- MKZ Steer Control -->
-    <include file="$(find path_duplication_launch)/launch/mkz_control.launch"/>
+    <!-- <include file="$(find path_duplication_launch)/launch/mkz_control.launch"/> -->
+    <!-- <node pkg="mkz_control" type="mkz_path_following_node.py" name="mkz_path_following_node" output="screen" required="true"/> -->
+
+    <node pkg="mkz_control" type="cascade_lateral_control_node.py" name="cascade_lateral_control_node" output="screen" required="true"/>
+
+    <!-- <node pkg="mkz_control" type="path_headway_control_node.py" name="path_headway_control_node" output="screen" required="true"/> -->
+
+
 
     <!-- DBW -->
-    <include file="$(find path_duplication_launch)/launch/dbw_for_steer_only.launch"/>
+    <!-- <include file="$(find path_duplication_launch)/launch/dbw_for_steer_only.launch"/> -->
+    <include file="$(find path_duplication_launch)/launch/dbw_for_speed_and_steer.launch"/>
 
     <!-- Rosbag record -->
     <node if="$(arg doBag)" pkg="rosbag" type="record" name="bagman" args="-a -b 0 -o /home/gavlab/devel/path_duplication_ws/data/path_duplication/pd_demo"/>

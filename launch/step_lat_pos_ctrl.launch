@@ -13,7 +13,7 @@
     <include file="$(find path_duplication_launch)/launch/novatel_rear.launch"/>
 
     <!-- Novatel (follower, right) -->
-    <!-- <include file="$(find path_duplication_launch)/launch/novatel_rear_right.launch"/> -->
+    <include file="$(find path_duplication_launch)/launch/novatel_rear_dual.launch"/>
 
     <!-- KVH -->
     <include file="$(find path_duplication_launch)/launch/kvh1725.launch"/>

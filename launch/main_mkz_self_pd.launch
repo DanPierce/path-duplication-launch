@@ -7,6 +7,8 @@
     <!-- Novatel (follower) -->
     <include file="$(find path_duplication_launch)/launch/novatel_rear.launch"/>
 
+    <!-- <include file="$(find path_duplication_launch)/launch/novatel_rear_dual.launch"/> -->
+
     <!-- Novatel (leader) -->
     <include file="$(find path_duplication_launch)/launch/novatel_front.launch"/>
 
@@ -26,14 +28,19 @@
     <include file="$(find path_duplication_launch)/launch/self_path_duplication.launch"/>
 
     <!-- MKZ Cascaded Control -->
-    <node pkg="mkz_control" type="cascade_lateral_control_node.py" name="cascade_lateral_control_node" output="screen" required="true"/>
+    <!-- <node pkg="mkz_control" type="cascade_lateral_control_node.py" name="cascade_lateral_control_node" output="screen" required="true"/> -->
+
+    <!-- <node pkg="mkz_control" type="lat_string_stable_control_node.py" name="cascade_lateral_control_node" output="screen" required="true"/> -->
+
+    <node pkg="mkz_control" type="lat_PI_control_node.py" name="cascade_lateral_control_node" output="screen" required="true"/>
 
     <!-- DBW -->
-    <include file="$(find path_duplication_launch)/launch/dbw_for_steer_only.launch"/>
+    <include file="$(find path_duplication_launch)/launch/dbw_for_speed_and_steer.launch"/>
+    <!-- <include file="$(find path_duplication_launch)/launch/dbw_for_steer_only.launch"/> -->
 
     <node name="rviz" pkg="rviz" type="rviz" output="screen" args="-d $(find path_duplication)/rviz/path_ned.rviz"/>
 
     <!-- Rosbag record -->
-    <node pkg="rosbag" type="record" name="bagman" args="-a -b 0 -o /home/gavlab/devel/path_duplication_ws/data/self_following/skidpad_take1"/>
+    <node pkg="rosbag" type="record" name="bagman" args="-a -b 0 -o /home/gavlab/devel/path_duplication_ws/data/stringStablePITest/villageParkBW1BW8_gain2"/>
 
 </launch>

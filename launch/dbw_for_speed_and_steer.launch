@@ -37,8 +37,8 @@
   <arg name="ackermann_wheelbase" default="2.8498"/>
   <arg name="ackermann_track"     default="1.5824"/>
   <arg name="steering_ratio"      default="14.8"/>
-  <arg name="twist_use_pedals"   default="True"/>
-  <arg name="twist_use_steering" default="False"/>
+  <arg name="twist_use_pedals"   default="true"/>
+  <arg name="twist_use_steering" default="false"/>
   <arg name="decel_max" default="1.5"/>
   <arg name="accel_max" default="1.5"/>
   <group ns="$(arg vehicle_ns)" >
